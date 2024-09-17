@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "libbmp.h"
-#include "Estenografia.h"
+#include "bibliotecas/libbmp.h"
+#include "bibliotecas/Estenografia.h"
 
 int main (int argc, char *argv[]) {
     int opcao;
