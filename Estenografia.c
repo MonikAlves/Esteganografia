@@ -100,14 +100,14 @@ uchar * descripMenssage(bmp_img *img){
 }
 
 
-uchar* criarMensagem() {
-    uchar *str = NULL;
+uchar* scan(){
+	uchar *str = NULL;
     uchar caracter = 'a';
     int tamanho = 0;
 
-    printf("\nDigite uma mensagem: \n");
+    printf("\nDigite uma mensagem: \n>>");
 
-     while ((caracter = getchar()) != '\n') {
+    while ((caracter = getchar()) != '\n') {
         str = alocarMemoria(str,caracter,tamanho);
         tamanho++;
     }
@@ -115,38 +115,106 @@ uchar* criarMensagem() {
     return alocarMemoria(str,'\0',tamanho);
 }
 
-int main (int argc, char *argv[]) {
+uchar* criarMensagem() {
 	int aux = 1;
-	bmp_img img;
-	bmp_img_read (&img, "bob.bmp");
 	uchar *mensagem = NULL;
-
     while (aux){
 
-		mensagem = criarMensagem();
-		printf("\nA string digitada foi: %s\n", mensagem);
-		printf("Digite 0 se deseja continuar e 1 se deseja reescrever a mensagem\n");
+		mensagem = scan();
+		printf("\nA string digitada foi: %s\n\n", mensagem);
+		printf("Digite 0 se deseja continuar e 1 se deseja reescrever a mensagem\n>>");
 		scanf("%d%*c",&aux);
-
+		
 		if(aux) {
 			free(mensagem);
 			limparterminal();
 		}
 	}
+
+	return mensagem;
+}
+
+uchar* dotBmp(uchar* str1) {
+    size_t len1 = strlen(str1);
+    size_t len2 = 4;
+    char* resultado = (char*)malloc(len1 + len2 + 1);
+    
+    if (resultado == NULL) {
+        printf("Erro ao alocar memória.\n");
+        exit(1);
+    }
+    strcpy(resultado, str1);
+
+    strcat(resultado, ".bmp");
+
+    return resultado;
+}
+
+void hiddeMenssage(){
+	bmp_img img;
+	bmp_img_read (&img, "bob.bmp");
+
+	uchar *mensagem = criarMensagem();
+	limparterminal();
 	
 	cripMenssage(&img,mensagem);
-    
-	bmp_img_write (&img, "test.bmp");
-	printf("\nA mensagem ''%s'' foi escondida\n",mensagem);
+
+	printf("Escolha o nome da foto com a mensagem escondida:\n");
+
+	uchar* nome = dotBmp(criarMensagem());
+	limparterminal();
+
+	bmp_img_write (&img, nome);
+
+	printf("\nA mensagem ''%s'' foi escondida na foto %s\n",mensagem,nome);
+
+
     free(mensagem); 
-	
-	bmp_img_read (&img, "test.bmp");
+	bmp_img_free (&img);
+}
+
+void showMenssage(){
+	bmp_img img;
+	enum bmp_error status;
+	int aux;
+
+	while(1){
+		limparterminal();
+		printf("Escolha o nome da foto com a mensagem escondida:\n");
+
+	uchar* nome = dotBmp(criarMensagem());
+	limparterminal();
+	status = bmp_img_read (&img, nome);
+
+		if(status != BMP_OK){
+			printf("%s não foi encontrado\n\nEscolha 1 para tentar novamente, e 0 para voltar ao menu\n>>",nome);
+			scanf("%d%*c",&aux);
+			free(nome);
+			if(aux == 0) return;
+		}else{
+			break;
+		}
+	}
+	uchar *mensagem = NULL;
 
 	mensagem = descripMenssage(&img);
-	printf("\n\nMensagem recuperada: %s\n", mensagem);
-	// printf("%s",teste);
+	printf("\n\nMensagem recuperada: %s\n\n", mensagem);
 
 	free(mensagem); 
 	bmp_img_free (&img);
-	return 0;
+}
+
+void exibirMenu() {
+    limparterminal();
+
+    printf("=====================================\n");
+    printf("|           MENU PRINCIPAL          |\n");
+    printf("=====================================\n");
+    printf("| 1. Criptografar Mensagem          |\n");
+    printf("| 2. Descriptografar Mensagem       |\n");
+    printf("| 3. Sair                           |\n");
+    printf("=====================================\n");
+    printf("| Escolha uma opcao:                |\n");
+    printf("=====================================\n");
+    printf(">> ");
 }
