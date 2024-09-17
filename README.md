@@ -24,3 +24,17 @@ Para compilar o programa, utilize o comando abaixo. Ele irá compilar o arquivo 
 
 ```bash
 gcc main.c bibliotecas/*.c -I"bibliotecas" -o Estenografia
+```
+
+## Como Executar
+Após a compilação, o arquivo executável será gerado com o nome `Estenografia`. Para rodar o programa, execute o comando abaixo:
+
+```bash
+./Estenografia
+```
+
+## Observações
+
+- O programa trabalha com imagens no formato `.bmp` e a mensagem a ser escondida pode ser qualquer texto.
+- Certifique-se de que a imagem de origem está no formato correto e que o caminho da imagem está sendo fornecido corretamente ao programa.
+- Toda string digitada terá uma mensagem de confirmação, se atente a isso.
