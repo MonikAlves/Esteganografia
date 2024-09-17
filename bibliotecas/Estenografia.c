@@ -105,7 +105,7 @@ uchar* scan(){
     uchar caracter = 'a';
     int tamanho = 0;
 
-    printf(">>");
+    printf(">> ");
 
     while ((caracter = getchar()) != '\n') {
         str = alocarMemoria(str,caracter,tamanho);
