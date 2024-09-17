@@ -16,28 +16,26 @@ int main (int argc, char *argv[]) {
         switch (opcao) {
             case 1:
                 limparterminal();
-                printf("\nVoce escolheu criptografar uma mensagem.\n");
+                printf("\nVoce escolheu criptografar uma mensagem.\n\n");
                 hiddeMenssage();
                 printf("De enter para volar ao menu");
                 scanf("%*c",&aux);
                 break;
             case 2:
                 limparterminal();
-                printf("\nVoce escolheu descriptografar uma mensagem.\n");
+                printf("\nVoce escolheu descriptografar uma mensagem.\n\n");
                 showMenssage();
                 printf("De enter para volar ao menu");
                 scanf("%*c",&aux);
                 break;
             case 3:
                 limparterminal();
-                printf("\nSaindo do programa...\n");
+                printf("\nSaindo do programa...\n\n");
                 exit(0);
             default:
-                printf("\nOpcao invalida! Tente novamente.\n");
+                printf("\nOpcao invalida! Tente novamente.\n\n");
         }
     }
 
 	return 0;
 }
-
-    
